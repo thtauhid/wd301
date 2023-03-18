@@ -1,10 +1,8 @@
-import "./TaskCard.css";
-
 const TaskCard = (props) => {
   console.log(props);
 
   return (
-    <div className='TaskItem '>
+    <div className='border-2 border-stone-400 rounded p-3 m-2'>
       <h2 className='text-xl font-bold'>{props.title}</h2>
       {
         // If the task is completed, show the completed date else show the due date

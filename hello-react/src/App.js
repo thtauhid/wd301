@@ -8,8 +8,10 @@ function App() {
         <b>Project:</b> Graduation Final Year Project (Revamp College Website)
       </p>
       <div className='flex flex-row justify-around mt-5'>
-        <div className='basis-1/2 flex flex-col border-2 border-stone-300 rounded p-5 mr-5'>
-          <h1 className='font-bold text-2xl pb-3'>Pending</h1>
+        <div className='basis-1/2 flex flex-col border-2 border-stone-400 rounded p-5 mr-5'>
+          <h1 className='font-bold text-2xl pb-3 text-center text-stone-500'>
+            Pending
+          </h1>
           <TaskCard
             title='Build the website with static content'
             dueDate='10th April'
@@ -21,8 +23,10 @@ function App() {
             assigneeName='Rohit M'
           />
         </div>
-        <div className='basis-1/2 flex flex-col border-2 border-stone-300 rounded p-5 ml-5'>
-          <h1 className='font-bold text-2xl py-3'>Done</h1>
+        <div className='basis-1/2 flex flex-col border-2 border-stone-400 rounded p-5 ml-5'>
+          <h1 className='font-bold text-2xl pb-3 text-center text-stone-500'>
+            Done
+          </h1>
           <TaskCard
             title='Design a mockup'
             completedAtDate='10th April'
