@@ -1,3 +1,4 @@
+import React from "react";
 import TaskCard from "./TaskCard";
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
               viewBox='0 0 24 24'
               stroke-width='1.5'
               stroke='currentColor'
-              class='w-6 h-6 mr-2'
+              className='w-6 h-6 mr-2'
             >
               <path
                 stroke-linecap='round'
