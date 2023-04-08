@@ -1,11 +1,11 @@
 import React from "react";
-import Task from "./Task";
 import "./App.css";
+import TaskList from "./TaskList";
 
 function App() {
   return (
     <div className='App'>
-      <Task title='Pay rent' />
+      <TaskList />
     </div>
   );
 }
