@@ -6,21 +6,16 @@ interface Props {
   tasks: TaskItem[];
 }
 
-interface State {
-  tasks: TaskItem[];
-}
-
-class TaskList extends React.Component<Props, State> {
-  render() {
-    return this.props.tasks.map((task, idx) => (
-      <Task
-        key={idx}
-        title={task.title}
-        description={task.description}
-        dueDate={task.dueDate}
-      />
-    ));
-  }
-}
+const TaskList = (props: Props) => {
+  const list = props.tasks.map((task, idx) => (
+    <Task
+      key={idx}
+      title={task.title}
+      description={task.description}
+      dueDate={task.dueDate}
+    />
+  ));
+  return <>{list}</>;
+};
 
 export default TaskList;

@@ -8,80 +8,71 @@ interface TaskFormState {
   description: string;
   dueDate: string;
 }
-class TaskForm extends React.Component<TaskFormProps, TaskFormState> {
-  constructor(props: TaskFormProps) {
-    super(props);
-    this.state = {
-      title: "",
-      description: "",
-      dueDate: "",
-    };
-  }
 
-  addTask: React.FormEventHandler<HTMLFormElement> = (event) => {
+const TaskForm = (props: TaskFormProps) => {
+  const [formState, setFormState] = React.useState<TaskFormState>({
+    title: "",
+    description: "",
+    dueDate: "",
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState({ ...formState, [event.target.name]: event.target.value });
+  };
+
+  const addTask: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const newTask = {
-      title: this.state.title,
-      description: this.state.description,
-      dueDate: this.state.dueDate,
-    };
-    this.props.addTask(newTask);
-    this.setState({ title: "", description: "", dueDate: "" });
+    console.log(`Submitted the form with`);
+    if (formState.title.length === 0 || formState.dueDate.length === 0) {
+      return;
+    }
+    props.addTask(formState);
+    setFormState({ title: "", description: "", dueDate: "" });
   };
 
-  // titleChanged: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-  //   console.log(`${event.target.value}`);
-  //   this.setState({ ...this.state, title: event.target.value });
-  // };
-
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ ...this.state, [event.target.name]: event.target.value });
-  };
-
-  render() {
-    return (
-      <form
-        onSubmit={this.addTask}
-        className='border-2 border-stone-600 border-dashed flex flex-col m-2'
+  return (
+    <form
+      onSubmit={addTask}
+      className='border-2 border-stone-600 border-dashed flex flex-col m-2'
+    >
+      <input
+        type='text'
+        className='border-2 border-stone-400 rounded p-3 m-2'
+        name='title'
+        placeholder='Title'
+        value={formState.title}
+        onChange={handleChange}
+        id='todoTitle'
+        required
+      />
+      <input
+        type='text'
+        className='border-2 border-stone-400 rounded p-3 m-2'
+        name='description'
+        placeholder='Description'
+        value={formState.description}
+        onChange={handleChange}
+        id='todoDescription'
+      />
+      <input
+        type='date'
+        className='border-2 border-stone-400 rounded p-3 m-2'
+        name='dueDate'
+        placeholder='Due Date'
+        value={formState.dueDate}
+        onChange={handleChange}
+        id='todoDueDate'
+        required
+      />
+      <button
+        type='submit'
+        className='border-2 border-stone-400 rounded p-3 m-2 hover:bg-stone-500'
+        id='addTaskButton'
       >
-        <input
-          type='text'
-          className='border-2 border-stone-400 rounded p-3 m-2'
-          name='title'
-          placeholder='Title'
-          value={this.state.title}
-          onChange={this.handleChange}
-          id='todoTitle'
-          required
-        />
-        <input
-          type='text'
-          className='border-2 border-stone-400 rounded p-3 m-2'
-          name='description'
-          placeholder='Description'
-          value={this.state.description}
-          onChange={this.handleChange}
-          id='todoDescription'
-        />
-        <input
-          type='date'
-          className='border-2 border-stone-400 rounded p-3 m-2'
-          name='dueDate'
-          placeholder='Due Date'
-          value={this.state.dueDate}
-          onChange={this.handleChange}
-          id='todoDueDate'
-          required
-        />
-        <button
-          type='submit'
-          className='border-2 border-stone-400 rounded p-3 m-2 hover:bg-stone-500'
-          id='addTaskButton'
-        >
-          Add item
-        </button>
-      </form>
-    );
-  }
-}
+        Add item
+      </button>
+    </form>
+  );
+};
+
 export default TaskForm;
