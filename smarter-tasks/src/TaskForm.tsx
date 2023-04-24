@@ -3,14 +3,10 @@ import { TaskItem } from "./types";
 interface TaskFormProps {
   addTask: (task: TaskItem) => void;
 }
-interface TaskFormState {
-  title: string;
-  description: string;
-  dueDate: string;
-}
 
 const TaskForm = (props: TaskFormProps) => {
-  const [formState, setFormState] = React.useState<TaskFormState>({
+  const [formState, setFormState] = React.useState<TaskItem>({
+    id: Number(new Date()),
     title: "",
     description: "",
     dueDate: "",
@@ -27,7 +23,12 @@ const TaskForm = (props: TaskFormProps) => {
       return;
     }
     props.addTask(formState);
-    setFormState({ title: "", description: "", dueDate: "" });
+    setFormState({
+      id: Number(new Date()),
+      title: "",
+      description: "",
+      dueDate: "",
+    });
   };
 
   return (

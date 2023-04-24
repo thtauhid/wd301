@@ -4,18 +4,22 @@ import { TaskItem } from "./types";
 
 interface Props {
   tasks: TaskItem[];
+  deleteTaskCB: (id: number) => void;
 }
 
 const TaskList = (props: Props) => {
   const list = props.tasks.map((task, idx) => (
-    <Task
-      key={idx}
-      title={task.title}
-      description={task.description}
-      dueDate={task.dueDate}
-    />
+    <li key={idx}>
+      <Task
+        id={task.id}
+        title={task.title}
+        description={task.description}
+        dueDate={task.dueDate}
+        deleteTaskCB={props.deleteTaskCB}
+      />
+    </li>
   ));
-  return <>{list}</>;
+  return <ul>{list}</ul>;
 };
 
 export default TaskList;

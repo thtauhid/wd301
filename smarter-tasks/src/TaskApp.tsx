@@ -1,7 +1,7 @@
-import React from "react";
 import { TaskItem } from "./types";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 interface TaskAppProp {}
 interface TaskAppState {
@@ -9,12 +9,25 @@ interface TaskAppState {
 }
 
 const TaskApp = (props: TaskAppProp) => {
-  const [taskAppState, setTaskAppState] = React.useState<TaskAppState>({
-    tasks: [],
-  });
+  const [taskAppState, setTaskAppState] = useLocalStorage<TaskAppState>(
+    "tasks",
+    {
+      tasks: [],
+    }
+  );
+
   const addTask = (task: TaskItem) => {
     setTaskAppState({ tasks: [...taskAppState.tasks, task] });
   };
+
+  const deleteTaskCB = (id: number) => {
+    setTaskAppState({
+      tasks: taskAppState.tasks.filter((task) => task.id !== id),
+    });
+
+    console.log(`Delete task with id: ${id}`);
+  };
+
   return (
     <div className='Main mt-5'>
       <h1 className='text-4xl font-bold text-stone-700'>Smarter Tasks</h1>
@@ -27,7 +40,7 @@ const TaskApp = (props: TaskAppProp) => {
             Pending
           </h1>
           <TaskForm addTask={addTask} />
-          <TaskList tasks={taskAppState.tasks} />
+          <TaskList tasks={taskAppState.tasks} deleteTaskCB={deleteTaskCB} />
         </div>
       </div>
     </div>
