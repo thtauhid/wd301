@@ -15,7 +15,7 @@ const Task = (props: TaskProps) => {
     <div className='border-2 border-stone-400 rounded p-3 m-2 TaskItem'>
       <div className='flex justify-between'>
         <Link to={`/tasks/${props.id}`}>
-          <h3 className='text-xl font-bold'>{props.title}</h3>
+          <h2 className='text-base font-bold my-1'>{props.title}</h2>
         </Link>
         <button
           className='bg-red-500 text-white p-2 rounded deleteTaskButton'
