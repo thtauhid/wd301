@@ -1,33 +1,29 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
-import HomePage from "./HomePage";
-import TaskApp from "./TaskApp";
-import TaskDetailsPage from "./TaskDetailsPage";
 import Header from "./Header";
-import Signin from "./Signin";
 import { ProtectedRoute } from "./ProtectedRoute";
 import NotFound from "./NotFound";
+import Signup from "./pages/signup";
+import Signin from "./pages/signin";
+import Dashboard from "./pages/dashboard";
 
 function App() {
   const location = useLocation();
 
-  const dontShowHeader = ["/signin", "/notfound"];
+  const dontShowHeader = ["/", "/signin", "/signup", "/notfound"];
 
   return (
     <div>
       {!dontShowHeader.includes(location.pathname) && <Header />}
 
       <Routes>
-        <Route path='/' element={<ProtectedRoute element={<HomePage />} />} />
-        <Route
-          path='/tasks'
-          element={<ProtectedRoute element={<TaskApp />} />}
-        />
-        <Route
-          path='/tasks/:id'
-          element={<ProtectedRoute element={<TaskDetailsPage />} />}
-        />
+        <Route path='/' element={<Signup />} />
+        <Route path='/signup' element={<Signup />} />
         <Route path='/signin' element={<Signin />} />
+        <Route
+          path='/dashboard'
+          element={<ProtectedRoute element={<Dashboard />} />}
+        />
         <Route path='/notfound' element={<NotFound />} />
         <Route path='*' element={<Navigate to='/notfound' />} />
       </Routes>
