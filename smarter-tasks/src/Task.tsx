@@ -15,9 +15,7 @@ const Task = (props: TaskProps) => {
     <div className='border-2 border-stone-400 rounded p-3 m-2 TaskItem'>
       <div className='flex justify-between'>
         <Link to={`/tasks/${props.id}`}>
-          <h2 className='text-xl font-bold'>
-            {props.title} ({props.dueDate})
-          </h2>
+          <h3 className='text-xl font-bold'>{props.title}</h3>
         </Link>
         <button
           className='bg-red-500 text-white p-2 rounded deleteTaskButton'
@@ -40,6 +38,7 @@ const Task = (props: TaskProps) => {
         </button>
       </div>
       <p>{props.description}</p>
+      <p>{props.dueDate}</p>
     </div>
   );
 };
