@@ -1,5 +1,6 @@
 import React from "react";
 import "./TaskCard.css";
+import { Link } from "react-router-dom";
 
 interface TaskProps {
   id: number;
@@ -13,9 +14,11 @@ const Task = (props: TaskProps) => {
   return (
     <div className='border-2 border-stone-400 rounded p-3 m-2 TaskItem'>
       <div className='flex justify-between'>
-        <h3 className='text-xl font-bold'>
-          {props.title} ({props.dueDate})
-        </h3>
+        <Link to={`/tasks/${props.id}`}>
+          <h2 className='text-xl font-bold'>
+            {props.title} ({props.dueDate})
+          </h2>
+        </Link>
         <button
           className='bg-red-500 text-white p-2 rounded deleteTaskButton'
           onClick={() => props.deleteTaskCB(props.id)}
