@@ -6,20 +6,21 @@ import NotFound from "./NotFound";
 import Signup from "./pages/signup";
 import Signin from "./pages/signin";
 import Dashboard from "./pages/dashboard";
+import HomePage from "./HomePage";
 
 function App() {
   const location = useLocation();
 
-  const dontShowHeader = ["/", "/signin", "/signup", "/notfound"];
+  const dontShowHeader = ["/signin", "/signup", "/notfound"];
 
   return (
     <div>
       {!dontShowHeader.includes(location.pathname) && <Header />}
 
       <Routes>
-        <Route path='/' element={<Signup />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/signin' element={<Signin />} />
+        <Route path='/' element={<ProtectedRoute element={<HomePage />} />} />
         <Route
           path='/dashboard'
           element={<ProtectedRoute element={<Dashboard />} />}
