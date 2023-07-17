@@ -46,6 +46,7 @@ const NewMember = () => {
     <>
       <button
         type='button'
+        id='new-member-btn'
         onClick={openModal}
         className='rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'
       >
@@ -90,6 +91,7 @@ const NewMember = () => {
                       <div>
                         <input
                           type='text'
+                          id='name'
                           placeholder='Name'
                           autoFocus
                           {...register("name", { required: true })}
@@ -103,8 +105,8 @@ const NewMember = () => {
                       <div>
                         <input
                           type='email'
+                          id='email'
                           placeholder='email'
-                          autoFocus
                           {...register("email", { required: true })}
                           className={`w-full border rounded-md py-2 px-3 my-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue ${
                             errors.email ? "border-red-500" : ""
@@ -116,8 +118,8 @@ const NewMember = () => {
                       <div>
                         <input
                           type='password'
+                          id='password'
                           placeholder='Password'
-                          autoFocus
                           {...register("password", { required: true })}
                           className={`w-full border rounded-md py-2 px-3 my-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue ${
                             errors.password ? "border-red-500" : ""
@@ -128,6 +130,7 @@ const NewMember = () => {
 
                       <button
                         type='submit'
+                        id='create-member-btn'
                         className='inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 mr-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 mt-2'
                       >
                         Submit
