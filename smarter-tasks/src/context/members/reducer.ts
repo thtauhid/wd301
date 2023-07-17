@@ -23,7 +23,8 @@ export type UsersActions =
   | { type: "FETCH_USERS_REQUEST" }
   | { type: "FETCH_USERS_SUCCESS"; payload: User[] }
   | { type: "FETCH_USERS_FAILURE"; payload: string }
-  | { type: "ADD_USER_SUCCESS"; payload: User };
+  | { type: "ADD_USER_SUCCESS"; payload: User }
+  | { type: "DELETE_USER_SUCCESS"; payload: number };
 
 export const reducer = (
   state: UsersState = initialState,
@@ -50,6 +51,12 @@ export const reducer = (
       };
     case "ADD_USER_SUCCESS":
       return { ...state, users: [...state.users, action.payload] };
+
+    case "DELETE_USER_SUCCESS":
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== action.payload),
+      };
 
     default:
       return state;
