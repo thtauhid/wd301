@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes";
 import { useContext } from "react";
 import { ThemeContext } from "./context/theme";
+import { ProjectsProvider } from "./context/projects/context";
 
 function App() {
   const currentTheme = useContext(ThemeContext);
@@ -13,7 +14,9 @@ function App() {
         currentTheme.theme === "dark" ? "dark" : ""
       }`}
     >
-      <RouterProvider router={router} />
+      <ProjectsProvider>
+        <RouterProvider router={router} />
+      </ProjectsProvider>
     </div>
   );
 }
