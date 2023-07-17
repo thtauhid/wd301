@@ -17,6 +17,9 @@ code {
   max-width: 1280px;
   margin: 0 auto;
 }
+.dark {
+  @apply bg-slate-800 text-zinc-50;
+}
 
 @tailwind base;
 @tailwind components;

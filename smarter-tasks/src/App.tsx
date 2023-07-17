@@ -1,33 +1,25 @@
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 
-import Header from "./Header";
-import { ProtectedRoute } from "./ProtectedRoute";
-import NotFound from "./NotFound";
-import Signup from "./pages/signup";
-import Signin from "./pages/signin";
-import Dashboard from "./pages/dashboard";
-import HomePage from "./HomePage";
+import router from "./routes";
+import { useContext } from "react";
+import { ThemeContext } from "./context/theme";
+import { ProjectsProvider } from "./context/projects/context";
+import { UsersProvider } from "./context/members/context";
 
 function App() {
-  const location = useLocation();
-
-  const dontShowHeader = ["/signin", "/signup", "/notfound"];
+  const currentTheme = useContext(ThemeContext);
 
   return (
-    <div>
-      {!dontShowHeader.includes(location.pathname) && <Header />}
-
-      <Routes>
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/signin' element={<Signin />} />
-        <Route path='/' element={<ProtectedRoute element={<HomePage />} />} />
-        <Route
-          path='/dashboard'
-          element={<ProtectedRoute element={<Dashboard />} />}
-        />
-        <Route path='/notfound' element={<NotFound />} />
-        <Route path='*' element={<Navigate to='/notfound' />} />
-      </Routes>
+    <div
+      className={`h-full w-full mx-auto py-2 ${
+        currentTheme.theme === "dark" ? "dark" : ""
+      }`}
+    >
+      <ProjectsProvider>
+        <UsersProvider>
+          <RouterProvider router={router} />
+        </UsersProvider>
+      </ProjectsProvider>
     </div>
   );
 }
