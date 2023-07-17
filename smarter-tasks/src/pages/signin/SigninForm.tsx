@@ -33,7 +33,7 @@ const SigninForm: React.FC = () => {
       localStorage.setItem("userData", JSON.stringify(data.user));
 
       // Then we will redirect the user to the dashboard
-      navigate("/dashboard");
+      navigate("/account");
     } catch (error) {
       console.error("Sign-in failed:", error);
     }
