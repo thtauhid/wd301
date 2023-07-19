@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from "../../config/constants";
 import {
+  ProjectData,
   TaskDetailsPayload,
   TaskListAvailableAction,
   TasksDispatch,
@@ -42,4 +43,11 @@ export const addTask = async (
       payload: "Unable to create task",
     });
   }
+};
+
+export const reorderTasks = (
+  dispatch: TasksDispatch,
+  newState: ProjectData
+) => {
+  dispatch({ type: TaskListAvailableAction.REORDER_TASKS, payload: newState });
 };
