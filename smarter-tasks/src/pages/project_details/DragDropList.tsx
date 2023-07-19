@@ -4,7 +4,7 @@ import Column from "./Column";
 import { DragDropContext, OnDragEndResponder } from "react-beautiful-dnd";
 import { useTasksDispatch } from "../../context/task/context";
 import { useParams } from "react-router-dom";
-import { reorderTasks } from "../../context/task/actions";
+import { reorderTasks, updateTask } from "../../context/task/actions";
 
 const Container = (props: React.PropsWithChildren) => {
   return <div className='flex'>{props.children}</div>;
@@ -12,6 +12,8 @@ const Container = (props: React.PropsWithChildren) => {
 
 const DragDropList = (props: { data: ProjectData }) => {
   const taskDispatch = useTasksDispatch();
+  const { projectID } = useParams();
+
   const onDragEnd: OnDragEndResponder = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) {
@@ -77,6 +79,12 @@ const DragDropList = (props: { data: ProjectData }) => {
       },
     };
     reorderTasks(taskDispatch, newState);
+
+    reorderTasks(taskDispatch, newState);
+    const updatedTask = props.data.tasks[updatedItems[0]];
+    updatedTask.state = finishKey;
+
+    updateTask(taskDispatch, projectID ?? "", updatedTask);
   };
 
   return (
