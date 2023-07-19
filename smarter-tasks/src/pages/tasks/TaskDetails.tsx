@@ -1,4 +1,4 @@
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Listbox, Transition } from "@headlessui/react";
 import React, { Fragment, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -7,9 +7,12 @@ import { updateTask } from "../../context/task/actions";
 
 import { useProjectsState } from "../../context/projects/context";
 import { TaskDetailsPayload } from "../../context/task/types";
+import { useUsersState } from "../../context/members/context";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
-type TaskFormUpdatePayload = TaskDetailsPayload;
-
+type TaskFormUpdatePayload = TaskDetailsPayload & {
+  selectedPerson: string;
+};
 // Helper function to format the date to YYYY-MM-DD format
 const formatDateForPicker = (isoDate: string) => {
   const dateObj = new Date(isoDate);
@@ -27,6 +30,8 @@ const TaskDetails = () => {
   let { projectID, taskID } = useParams();
   let navigate = useNavigate();
 
+  const userState = useUsersState();
+
   // Extract project and task details.
   const projectState = useProjectsState();
   const taskListState = useTasksState();
@@ -38,6 +43,10 @@ const TaskDetails = () => {
 
   const selectedTask = taskListState.projectData.tasks[taskID ?? ""];
   // Use react-form-hook to manage the form. Initialize with data from selectedTask.
+  const [selectedPerson, setSelectedPerson] = useState(
+    selectedTask.assignedUserName ?? ""
+  );
+
   const {
     register,
     handleSubmit,
@@ -46,6 +55,7 @@ const TaskDetails = () => {
     defaultValues: {
       title: selectedTask.title,
       description: selectedTask.description,
+      selectedPerson: selectedTask.assignedUserName,
       dueDate: formatDateForPicker(selectedTask.dueDate),
     },
   });
@@ -60,9 +70,13 @@ const TaskDetails = () => {
   }
 
   const onSubmit: SubmitHandler<TaskFormUpdatePayload> = async (data) => {
+    const assignee = userState?.users?.filter(
+      (user) => user.name === selectedPerson
+    )?.[0];
     updateTask(taskDispatch, projectID ?? "", {
       ...selectedTask,
       ...data,
+      assignee: assignee?.id,
     });
     closeModal();
   };
@@ -127,6 +141,52 @@ const TaskDetails = () => {
                         {...register("dueDate", { required: true })}
                         className='w-full border rounded-md py-2 px-3 my-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue'
                       />
+                      <h3>
+                        <strong>Assignee</strong>
+                      </h3>
+                      <Listbox
+                        value={selectedPerson}
+                        onChange={setSelectedPerson}
+                      >
+                        <Listbox.Button className='w-full border rounded-md py-2 px-3 my-2 text-gray-700 text-base text-left'>
+                          {selectedPerson}
+                        </Listbox.Button>
+                        <Listbox.Options className='absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                          {userState?.users.map((person) => (
+                            <Listbox.Option
+                              key={person.id}
+                              className={({ active }) =>
+                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                  active
+                                    ? "bg-blue-100 text-blue-900"
+                                    : "text-gray-900"
+                                }`
+                              }
+                              value={person.name}
+                            >
+                              {({ selected }) => (
+                                <>
+                                  <span
+                                    className={`block truncate ${
+                                      selected ? "font-medium" : "font-normal"
+                                    }`}
+                                  >
+                                    {person.name}
+                                  </span>
+                                  {selected ? (
+                                    <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-blue-600'>
+                                      <CheckIcon
+                                        className='h-5 w-5'
+                                        aria-hidden='true'
+                                      />
+                                    </span>
+                                  ) : null}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </Listbox>
                       <button
                         type='submit'
                         className='inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 mr-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
