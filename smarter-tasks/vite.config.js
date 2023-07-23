@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 
 export default ({ mode }) => {
   return defineConfig({
+    mode: "production",
     build: {
       outDir: "build",
     },
