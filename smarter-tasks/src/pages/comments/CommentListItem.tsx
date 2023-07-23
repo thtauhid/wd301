@@ -8,10 +8,6 @@ function CommentListItem() {
 
   const { comments, isLoading, isError, errorMessage } = state;
 
-  comments.sort((a: Comment, b: Comment) => {
-    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-  });
-
   if (comments.length === 0 && isLoading) {
     return <span>Loading...</span>;
   }

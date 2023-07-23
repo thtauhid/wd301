@@ -37,7 +37,7 @@ export const commentsReducer = (
       return {
         ...state,
         isLoading: false,
-        comments: [...state.comments, action.payload],
+        comments: [action.payload, ...state.comments],
       };
 
     default:
